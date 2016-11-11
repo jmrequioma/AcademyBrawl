@@ -6,9 +6,8 @@ The reek of bloodlust is in the air as the days of intramurals sneaks closer. In
 
 This is a project made in order to satisfy the requirements of CMSC 22. This game would be a Java programmed 2-Dimensional figting game with references such as King of Fighters Wing. However, since the developers lack expertise in Artificial Intelligence programming, the game would only feature player vs player mode. Nothing is still set in  stone since some significant changes may occur during development. 
 
-### Changelog
+### Changelog (as of 11/11/16)
 
-*This is to track the current progress of the game's development
 Avaialable Features
 
 ```
