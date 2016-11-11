@@ -10,12 +10,10 @@ import org.newdawn.slick.geom.Rectangle;
 
 
 public class Combatant extends Entity{
-	private Rectangle r;
 	private float x; 
 	private float y = 420;
 	private float Y = 500;
-	private int velY = 0;
-	private int view = 0; 
+	private int view = 0; // 0 for facing left and 1 for facing right
 	private boolean falling = true;
 	private boolean jumping = false;
 	private SpriteSheet kIdleL, kIdleR, kWalkL, kWalkR, kJumpL, kJumpR;
@@ -50,6 +48,7 @@ public class Combatant extends Entity{
 		if (falling == false)
 			g.drawAnimation(kAnimation, x, y);
 		else if (falling == true && y > 330 && y < 420){
+			// If falling the animation remains constant
 			 if (view == 1)
 				g.drawImage(kJumpL.getSprite(0, 3), x, y);
 			 else 
@@ -59,17 +58,16 @@ public class Combatant extends Entity{
 
 	@Override
 	public void update(GameContainer gc, int delta) {
-		// TODO Auto-generated method stub
 		kAnimation.update(delta);
+		
 		Input in = gc.getInput();
-		if (x >= 0 && x <= 700) {
+		
+		if (x >= 0 && x <= 700) { // within bounds
 			if (in.isKeyDown(Input.KEY_W) && view == 0 && jumping == false) {
 				kAnimation = kAnimationJR;
-				velY = 1;
 				jumping = true;
 			} else if (in.isKeyDown(Input.KEY_W) && jumping == false) {
 				kAnimation = kAnimationJL;
-				velY = 1;
 				jumping = true;
 			}else if (in.isKeyDown(Input.KEY_A)) {
 				if (jumping == false)
@@ -97,20 +95,16 @@ public class Combatant extends Entity{
 	}// End of update()
 	
 	public void gravity(){
-		if (jumping == true && velY != 0 && falling == false){
+		if (jumping == true && falling == false)
 			y -=  10;
-		}
-		if (y == 300){
+		if (y == 300)
 			falling = true;
-		}
 		if (y >= 420){
-			velY = 0;
 			y = 420;
 			jumping = false;
 			falling = false;
 		}
 		if (falling == true)
-			y += 4;
-			
-	}
-}
+			y += 4;	
+	}// End of gravity()
+}// End of class

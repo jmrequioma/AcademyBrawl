@@ -27,4 +27,9 @@ public class Box {
 	public boolean hitTest(Box b){
 		return (b.getEndX() >= x && b.getEndY() >= y && getEndX() >= b.x && getEndY() >= b.y);
 	}
+	
+	public void resize(float width, float height){
+		this.width = width;
+		this.height = height;
+	}
 }

@@ -76,12 +76,13 @@ public class MenuState extends BasicGameState {
 			y += (200 / 1000.0f) * delta;
 		}
 		*/
+		// When mouse enters the start button
 		if (in.getMouseX() >= 300 && in.getMouseX() <= 500 && in.getMouseY() >= 400 && in.getMouseY() <= 475) {
 			if (Mouse.isButtonDown(0)) {
 				sbg.enterState(1);
 			}
 		}
-		
+		// When mouse enters exit button
 		if (in.getMouseX() >= 300 && in.getMouseX() <= 500 && in.getMouseY() >= 500 && in.getMouseY() <= 575) {
 			if (Mouse.isButtonDown(0)) {
 				gc.exit();;

@@ -36,8 +36,7 @@ public class GameTester extends StateBasedGame {
 		AppGameContainer apgc;
 		
 		try {
-			apgc = new AppGameContainer(new GameTester(GAME_NAME));
-			
+			apgc = new AppGameContainer(new GameTester(GAME_NAME));			
 			apgc.setDisplayMode(800, 600, false);
 			apgc.start();
 		} catch (SlickException e) {	
