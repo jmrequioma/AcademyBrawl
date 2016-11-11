@@ -63,7 +63,7 @@ Move Right [←]   [→] Move Left      [1] - Weak kick   [2] - Strong kick
 
 ## Refernces
 
-* [King of Fighters Wing](www.y8.com/games/King_Of_Fighters_v_1_3) - Where the initial sprite animations come from
+* [King of Fighters Wing](https://www.y8.com/games/King_Of_Fighters_v_1_3) - Where the initial sprite animations come from
 
 ## Developers
 
