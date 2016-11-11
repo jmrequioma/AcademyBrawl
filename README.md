@@ -36,7 +36,8 @@ Missing Features
 
 Player 1
 
-```           Jump
+```
+             Jump
               [W]                   [I] - Weak punch  [O] - Strong punch  [P] - Ultimate Ability
 Move Right [A]   [S] Move Left      [K] - Weak kick   [L] - Strong kick
               [D]
@@ -45,7 +46,8 @@ Move Right [A]   [S] Move Left      [K] - Weak kick   [L] - Strong kick
 
 Player 2
 
-```           Jump                  *numpad keys
+```
+             Jump                  *numpad keys
               [↑]                   [4] - Weak punch  [5] - Strong punch  [6] - Ultimate Ability
 Move Right [←]   [→] Move Left      [1] - Weak kick   [2] - Strong kick
               [↓]
