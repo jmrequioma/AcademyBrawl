@@ -8,9 +8,9 @@ This is a project made in order to satisfy the requirements of CMSC 22. This gam
 
 ### Changelog
 
-This is to track the current progress of the game's development
-
+*This is to track the current progress of the game's development
 Avaialable Features
+
 ```
 *Main Menu and basic button behaviors (iniital)
 *Render of first player with proper window binding
@@ -18,6 +18,7 @@ Avaialable Features
 ```
 
 Missing Features
+
 ```
 *Custom Character Desings
 *Character Selection Window
@@ -30,9 +31,11 @@ Missing Features
 *Unlockable Secret Characters
 ...maybe some additional features during development
 ```
+
 ### Player Controls
 
 Player 1
+
 ```           Jump
               [W]                   [I] - Weak punch  [O] - Strong punch  [P] - Ultimate Ability
 Move Right [A]   [S] Move Left      [K] - Weak kick   [L] - Strong kick
@@ -41,6 +44,7 @@ Move Right [A]   [S] Move Left      [K] - Weak kick   [L] - Strong kick
 ```
 
 Player 2
+
 ```           Jump                  *numpad keys
               [↑]                   [4] - Weak punch  [5] - Strong punch  [6] - Ultimate Ability
 Move Right [←]   [→] Move Left      [1] - Weak kick   [2] - Strong kick
