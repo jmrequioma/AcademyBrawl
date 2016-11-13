@@ -32,4 +32,9 @@ public class Box {
 		this.width = width;
 		this.height = height;
 	}
+	
+	public void rePosition(float x, float y){
+		this.x = x;
+		this.y = y;
+	}
 }

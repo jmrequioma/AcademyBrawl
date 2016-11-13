@@ -1,7 +1,6 @@
 package main;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.*;
 import org.newdawn.slick.state.*;
 
 import entities.*;
