@@ -1,4 +1,4 @@
-# Academy Brawl / School Rumble
+# Brutality in the Academy (pending)
 
 The reek of bloodlust is in the air as the days of intramurals sneaks closer. In this day of constant battle each cluster fights for the top spots in their respective events. However, this year’s intramurals will be unlike any other. Looking at the intramurals as a chance to relieve the pent up stress of the students, the school board has changed the mechanics of the intramurals altogether. Students no longer fight through carefully regulated sports but fight each other in mortal combat. The rules have changed and one fighter is taken from each respective course. The concept of cluster unity is thrown out the window as students prepare to show their respective course’s might in the days to come. There is no other form of bonding and stress relief as beating the brain cells of your opponent to death. Would students release their potent ability for combat or would they run away from this yearly opportunity of tackling the one who bought the last piece of pastry in the canteen? But would the students be the only one to participate in this all out brawl? We’ll just have to wait and see. 
 
