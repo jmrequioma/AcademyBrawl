@@ -70,7 +70,7 @@ Move Right [←]   [→] Move Left      [1] - Weak kick   [2] - Strong kick
 * **Christian Jeremy Lapuz** - [CjLapuz](https://github.com/CjLapuz)
 * **Jerome Enrico Requioma** - [jmrequioma](https://github.com/jmrequioma)
 * **Florence Athena Zauleck** - [matchamatcha](https://github.com/matchamatcha)
-* **Marc Leo Munda** - [Marc Leo Munda](https://www.facebook.com/leomunda?fref=ts)
+* **Marc Leo Munda** - [Marc Leo Munda](https://github.com/MLMunda)
 
 
 ## Acknowledgments
