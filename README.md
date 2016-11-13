@@ -13,7 +13,8 @@ Avaialable Features
 ```
 *Main Menu and basic button behaviors (iniital)
 *Render of first player with proper window binding
-*Basic movement controls excluding crouch
+*Basic movement controls (movement)
+*Intialization of player hitbox (not tested)
 ```
 
 Missing Features
