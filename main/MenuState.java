@@ -8,22 +8,14 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class MenuState extends BasicGameState {
 	Music mainmusic;
-	private int ID = 0;
-	private Rectangle r;
-	private float x;
-	private float Y = 500;
-	private float xPos, yPos;
-	private String mouse = "";
+	private int ID = 0;	
+	public MenuState(int state) {}
 	
-	public MenuState(int state) {
-		
-	}
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		
@@ -37,8 +29,7 @@ public class MenuState extends BasicGameState {
 		play.draw(300, 400);
 		exit.draw(300, 500);
 		g.setBackground(Color.darkGray);
-		g.drawString("School Rumble!!!", 330, 40);
-		g.drawString(mouse, 50, 50);
+		g.drawString("School Rumble!!!", 330, 40); 
 		g.setColor(Color.pink);
 		//r = new Rectangle(x, Y, 100, 50);
 		//g.draw(r);
@@ -49,33 +40,7 @@ public class MenuState extends BasicGameState {
 		
 		
 		Input in = gc.getInput();
-		
-		xPos = in.getMouseX();
-		yPos = in.getMouseY();
-		mouse = "x: " + xPos + " y: " + yPos;
-		/*
-		if (x >= 0 && x <= 700) {
-			if (in.isKeyDown(Input.KEY_LEFT)) {
-				x -= (200 / 1000.0f) * delta;
-			} else if (in.isKeyDown(Input.KEY_RIGHT)) {
-				x += (200 / 1000.0f) * delta;
-				
-			}
-		} else {
-			if (x < 0) {
-				x = 1;
-			} else if (x > 700) {
-				x = 700;
-			}
-			*/
-		/*
-		}else if (in.isKeyDown(Input.KEY_UP)) {
-		}
-			y -= (200 / 1000.0f) * delta;
-		} else if (in.isKeyDown(Input.KEY_DOWN)) {
-			y += (200 / 1000.0f) * delta;
-		}
-		*/
+
 		// When mouse enters the start button
 		if (in.getMouseX() >= 300 && in.getMouseX() <= 500 && in.getMouseY() >= 400 && in.getMouseY() <= 475) {
 			if (Mouse.isButtonDown(0)) {

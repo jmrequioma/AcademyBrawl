@@ -19,13 +19,11 @@ public class GameTester extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
-		// PC Master Race only accepts 60 or more fps
-        gc.setTargetFrameRate(60);
-        gc.setAlwaysRender(true);
-        gc.setMaximumLogicUpdateInterval(60);
-        gc.setVSync(true);
-        // to remove fps display
-        gc.setShowFPS(false);
+        gc.setTargetFrameRate(400);                  // set desired frame rate
+        gc.setAlwaysRender(true);                   // always rendering even if alt-tabbed
+        gc.setMaximumLogicUpdateInterval(120);      // max update interval
+        gc.setVSync(true);							// to enable Vertical syncing
+        gc.setShowFPS(false);                       // to remove fps display
         
 		this.getState(menu).init(gc, this);
 		this.getState(play).init(gc, this);
@@ -37,7 +35,7 @@ public class GameTester extends StateBasedGame {
 		
 		try {
 			apgc = new AppGameContainer(new GameTester(GAME_NAME));			
-			apgc.setDisplayMode(800, 600, false);
+			apgc.setDisplayMode(800, 600, false);   // set window border to 800 x 600 (WidthxHeight)
 			apgc.start();
 		} catch (SlickException e) {	
 			e.printStackTrace();
