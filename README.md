@@ -26,7 +26,7 @@ Missing Features
 ```
 *Controls Diagram
 *Options
-*Custom Character Desings
+*Custom Character Designs
 *Move List
 *Background Image (arenas)
 *Unlockable Secret Characters
@@ -40,43 +40,4 @@ Player 1
 ```
              Jump
               [W]                   [I] - Weak punch  [O] - Strong punch  [P] - Ultimate Ability
-Move Right [A]   [S] Move Left      [K] - Weak kick   [L] - Strong kick
-              [D]
-              Crouch
-```
-
-Player 2
-
-```
-             Jump                  *numpad keys
-              [↑]                   [4] - Weak punch  [5] - Strong punch  [6] - Ultimate Ability
-Move Right [←]   [→] Move Left      [1] - Weak kick   [2] - Strong kick
-              [↓]
-              Crouch
-```
-
-## Built With
-
-* [Eclipse](https://eclipse.org/downloads/) - The IDE framework used
-* [Slick2D](http://slick.ninjacave.com/) - Imporeted Library
-* [Lightweight Java Game Library](https://www.lwjgl.org/) - Imported Library
-* [Photoshop CS6](http://www.photoshop.com/) - Image Editing software use
-* [TexturePackagerGUI](https://www.codeandweb.com/texturepacker) - Sprite Sheet creating software
-
-## References
-
-* [King of Fighters Wing](https://www.y8.com/games/King_Of_Fighters_v_1_3) - Where the initial sprite animations come from
-
-## Developers
-
-* **Christian Jeremy Lapuz** - [CjLapuz](https://github.com/CjLapuz)
-* **Jerome Enrico Requioma** - [jmrequioma](https://github.com/jmrequioma)
-* **Florence Athena Zauleck** - [matchamatcha](https://github.com/matchamatcha)
-* **Marc Leo Munda** - [MLMunda](https://github.com/MLMunda)
-
-
-## Acknowledgments
-
-* To all the tutorials on Slick2D, you the MVP
-* Intenet, for the abudnace of sprites
-* etc
+Move R
