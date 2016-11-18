@@ -26,7 +26,7 @@ Missing Features
 ```
 *Controls Diagram
 *Options
-*Custom Character Desings
+*Custom Character Designs
 *Move List
 *Background Image (arenas)
 *Unlockable Secret Characters
