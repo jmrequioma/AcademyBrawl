@@ -13,15 +13,19 @@ import util.Box;
 public class Combatant extends Box{
 	public float x;                        // position of player
 	public float xa = 0;                   // movement across the x axis
-	public boolean stopped = false;        // if a player is blocked by another player
+
 	private float y = 420;                 // position along the y-axis (constant except when jumping, duh)
 	private float ya = 0;                  // movement across the y axis
+	
 	private int view = 0;                  // 0 for facing left and 1 for facing right
 	private int player;                    // which player is this player (1 or 2)
+	
 	private float hP;                      // player hp
 	private float energy;                  // player energy gauge for use of ultimate skills
 	
 	public boolean hit = false;            // if a player is hit
+	public boolean moving = false;        // if a player is blocked by another player
+	public boolean stopped = false;
 	public boolean attacking = false; 
 	private boolean falling = false; 
 	private boolean jumping = false; 
@@ -51,24 +55,24 @@ public class Combatant extends Box{
 		super.rePosition(x, y); // sets the current players position for collision detection
 		try {
 			// initialization of sprite sheets
-			kIdleL = new SpriteSheet("res/idleleft.png", 125, 175);
-			kIdleR = new SpriteSheet("res/idleright.png", 125, 175);
-			kWalkL = new SpriteSheet("res/walkleft.png", 125, 175);
-			kWalkR = new SpriteSheet("res/walkright.png", 125, 175);
-			kJumpL = new SpriteSheet("res/jumpleft.png", 111, 220);
-			kJumpR = new SpriteSheet("res/jumpright.png", 111, 220);
-			kDuckL = new SpriteSheet("res/duckleft.png", 125, 175);
-			kDuckR = new SpriteSheet("res/duckright.png", 125, 175);
-			kLPunchL = new SpriteSheet("res/lightpunchleft.png", 160, 175);
-			kLPunchR = new SpriteSheet("res/lightpunchright.png", 160, 175);
-			kSPunchL = new SpriteSheet("res/heavypunchleft.png", 160, 175);
-			kSPunchR = new SpriteSheet("res/heavypunchright.png", 160, 175);
-			kLKickL = new SpriteSheet("res/lightkickleft.png", 160, 175);
-			kLKickR = new SpriteSheet("res/lightkickright.png", 160, 175);
-			kSKickL = new SpriteSheet("res/heavykickleft.png", 160, 175);
-			kSKickR = new SpriteSheet("res/heavykickright.png", 160, 175);
-			kHitR = new SpriteSheet("res/ghitright.png", 125, 175);
-			kHitL = new SpriteSheet("res/ghitleft.png", 125, 175);
+			kIdleL = new SpriteSheet("res/characters/comsci/idleleft.png", 125, 175);
+			kIdleR = new SpriteSheet("res/characters/comsci/idleright.png", 125, 175);
+			kWalkL = new SpriteSheet("res/characters/comsci/walkleft.png", 125, 175);
+			kWalkR = new SpriteSheet("res/characters/comsci/walkright.png", 125, 175);
+			kJumpL = new SpriteSheet("res/characters/comsci/jumpleft.png", 111, 220);
+			kJumpR = new SpriteSheet("res/characters/comsci/jumpright.png", 111, 220);
+			kDuckL = new SpriteSheet("res/characters/comsci/duckleft.png", 125, 175);
+			kDuckR = new SpriteSheet("res/characters/comsci/duckright.png", 125, 175);
+			kLPunchL = new SpriteSheet("res/characters/comsci/lightpunchleft.png", 160, 175);
+			kLPunchR = new SpriteSheet("res/characters/comsci/lightpunchright.png", 160, 175);
+			kSPunchL = new SpriteSheet("res/characters/comsci/heavypunchleft.png", 160, 175);
+			kSPunchR = new SpriteSheet("res/characters/comsci/heavypunchright.png", 160, 175);
+			kLKickL = new SpriteSheet("res/characters/comsci/lightkickleft.png", 160, 175);
+			kLKickR = new SpriteSheet("res/characters/comsci/lightkickright.png", 160, 175);
+			kSKickL = new SpriteSheet("res/characters/comsci/heavykickleft.png", 160, 175);
+			kSKickR = new SpriteSheet("res/characters/comsci/heavykickright.png", 160, 175);
+			kHitR = new SpriteSheet("res/characters/comsci/ghitright.png", 125, 175);
+			kHitL = new SpriteSheet("res/characters/comsci/ghitleft.png", 125, 175);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -115,224 +119,255 @@ public class Combatant extends Box{
 
 	// Update every new action
 	public void update(GameContainer gc, int delta) {
-		kAnimation.update(delta);
+		if (gc.isPaused())
+			kAnimation.stop();
+	    else{
+	    	kAnimation.start();
+	    	kAnimation.update(delta);
 		
-		super.rePosition(x, y); // updates the current x and y coordinates of the player
+	    	super.rePosition(x, y); // updates the current x and y coordinates of the player
+	    	if (!attacking)
+	    		super.resize(125, 175);
 		
-		// user input
-		Input in = gc.getInput();
+	    	// user input
+	    	Input in = gc.getInput();
 		
-		// Sees if the knock back animation is done
-    	if (kAnimation.getCurrentFrame() == kAnimationHL.getImage(3) ||
-    		kAnimation.getCurrentFrame() == kAnimationHR.getImage(3)
-    		&& hit)
-    	{
-    		hit = false;
-    	}
+	    	// Sees if the knock back animation is done
+	    	if (kAnimation.getCurrentFrame() == kAnimationHL.getImage(3) ||
+	    			kAnimation.getCurrentFrame() == kAnimationHR.getImage(3)
+	    			&& hit)
+	    	{
+	    		xa = 0;
+	    		hit = false;
+	    		System.out.println(hit);
+	    	}
     	
-    	// Sees if the attack animation is finished in order to 
-        // update the player's attacking variable
-    	if (    kAnimation.getCurrentFrame() == kAnimationLPR.getImage(4) ||
-    			kAnimation.getCurrentFrame() == kAnimationLPL.getImage(4) ||
-    			kAnimation.getCurrentFrame() == kAnimationSPR.getImage(8) ||
-				kAnimation.getCurrentFrame() == kAnimationSPL.getImage(8) ||
-				kAnimation.getCurrentFrame() == kAnimationLKR.getImage(5) ||
-				kAnimation.getCurrentFrame() == kAnimationLKL.getImage(5) ||
-				kAnimation.getCurrentFrame() == kAnimationSKR.getImage(9) ||
-				kAnimation.getCurrentFrame() == kAnimationSKL.getImage(9) 
-				&& attacking)
-    	{
-    		attacking = false;
-    	}
+	    	// Sees if the attack animation is finished in order to 
+	    	// update the player's attacking variable
+	    	if (    kAnimation.getCurrentFrame() == kAnimationLPR.getImage(4) ||
+	    			kAnimation.getCurrentFrame() == kAnimationLPL.getImage(4) ||
+	    			kAnimation.getCurrentFrame() == kAnimationSPR.getImage(8) ||
+	    			kAnimation.getCurrentFrame() == kAnimationSPL.getImage(8) ||
+	    			kAnimation.getCurrentFrame() == kAnimationLKR.getImage(5) ||
+	    			kAnimation.getCurrentFrame() == kAnimationLKL.getImage(5) ||
+	    			kAnimation.getCurrentFrame() == kAnimationSKR.getImage(9) ||
+	    			kAnimation.getCurrentFrame() == kAnimationSKL.getImage(9) 
+	    			&& attacking)
+	    	{
+	    		attacking = false;
+	    	}
     	
-		// Player 1 controls
-		if (player == 1){
-			// if player is not hit he can attack
-		    if (!hit){
-		    // TODO resize the box to simulate an actual punch or kick
-		    // FIXME heavy attacks causes a dual proc of knock back animation
-		    	//light punch
-		    	if (in.isKeyDown(Input.KEY_U)) {
-		    		attacking = true;
-					if (view == 0) // if facing left
-						kAnimation = kAnimationLPR;
-					else           // if facing right
-						kAnimation = kAnimationLPL;
+	    	// Player 1 controls
+	    	if (player == 1){
+	    		// if player is not hit he can attack
+	    		if (!hit){
+	    			// TODO resize the box to simulate an actual punch or kick
+	    			// FIXME heavy attacks causes a dual proc of knock back animation
+	    			//light punch
+	    			if (in.isKeyPressed(Input.KEY_U) && !attacking) {
+	    				attacking = true;
+	    				if (view == 0) // if facing left
+	    					kAnimation = kAnimationLPR;
+	    				else           // if facing right
+	    					kAnimation = kAnimationLPL;
 				
-				//light kick 
-		    	}else if (in.isKeyDown(Input.KEY_J)) {
-		    		attacking = true;
-		    		if (view == 0)	// if facing left
-		    			kAnimation = kAnimationLKR;
-		    		else 			// if facing right
-		    			kAnimation = kAnimationLKL;
+	    				//light kick 
+	    			}else if (in.isKeyPressed(Input.KEY_J) && !attacking) {
+	    				attacking = true;
+	    				if (view == 0)	// if facing left
+	    					kAnimation = kAnimationLKR;
+	    				else 			// if facing right
+	    					kAnimation = kAnimationLKL;
 		    		
-		    	//heavy punch
-		    	}else if (in.isKeyDown(Input.KEY_I)) {
-		    		attacking = true;
-		    		if (view == 0)	// if facing left
-		    			kAnimation = kAnimationSPR;
-		    		else 			// if facing right
-		    			kAnimation = kAnimationSPL;
+	    				//heavy punch
+	    			}else if (in.isKeyPressed(Input.KEY_I) && !attacking) {
+	    				attacking = true;
+	    				if (view == 0)	// if facing left
+	    					kAnimation = kAnimationSPR;
+	    				else 			// if facing right
+	    					kAnimation = kAnimationSPL;
 		    		
-		    	//heavy kick	
-		    	}else if (in.isKeyDown(Input.KEY_K)) {
-		    		attacking = true;
-		    		if (view == 0)	// if facing left
-		    			kAnimation = kAnimationSKR;
-		    		else 			// if facing right
-		    			kAnimation = kAnimationSKL;
-		    	}
-		    // Getting hit by another player 
-		    } else {
-		    	if (view == 1) // if facing left
-		    		kAnimation = kAnimationHL;
-		    	else    	  // if facing right
-		    		kAnimation = kAnimationHR;
-		    }
+	    				//heavy kick	
+	    			}else if (in.isKeyPressed(Input.KEY_K) && !attacking) {
+	    				attacking = true;
+	    				if (view == 0)	// if facing left
+	    					kAnimation = kAnimationSKR;
+	    				else 			// if facing right
+	    					kAnimation = kAnimationSKL;
+	    			}
+	    			// Getting hit by another player 
+	    		} else if (hit){
+	    			if (view == 1){ // if facing left
+	    				kAnimation = kAnimationHL;
+	    				if (x <= 665)
+	    					xa = 4;
+	    			} else{    	   // if facing right
+	    				kAnimation = kAnimationHR;
+	    				if (x >= 5)
+	    					xa = -4;
+	    			}
+	    			x += xa;
+	    		}
 		    	
-		    // If the player is either not hit or not attacking he can move
-			if (!attacking && !hit){
-				//jumping
-				// jump only works if the player is not currently jumping
-				if (in.isKeyDown(Input.KEY_W) && !jumping && !falling) {
-					ya = 15;        // sets the y-velocity
-					if (view == 0) // if facing left
-						kAnimation = kAnimationJR;
-					else           // if facing right
-						kAnimation = kAnimationJL;
-					jumping = true;
+	    		// If the player is either not hit and not attacking he can move
+	    		if (!attacking && !hit){
+				
+	    			//jumping
+	    			// jump only works if the player is not currently jumping
+	    			if (in.isKeyPressed(Input.KEY_W) && !jumping && !falling) {
+	    				ya = 15;        // sets the y-velocity
+	    				if (view == 0) // if facing left
+	    					kAnimation = kAnimationJR;
+	    				else           // if facing right
+	    					kAnimation = kAnimationJL;
+	    				jumping = true;
+
+	    				//ducking 	
+	    			}else if (in.isKeyDown(Input.KEY_S)) {
+	    				xa = 0; 		 // stops the player at that point 
+	    				if (view == 0)	// if facing left
+	    					kAnimation = kAnimationDR;
+	    				else           // if facing right
+	    					kAnimation = kAnimationDL;
+	    				moving = false;
+	    				super.resize(60, 125);
+				
+	    				//moving left
+	    			}else if (in.isKeyDown(Input.KEY_A)) {
+	    				view = 1; 		                     // changes the view of the player to facing right
+	    				if (!jumping)                       // if not currently in the air it changes the animation
+	    					kAnimation = kAnimationWL;
+	    				if (!stopped)
+	    					xa = (200 / 1000.0f) * -delta; // sets the x-velocity
+	    				moving = true;
 					
-				//ducking 	
-				}else if (in.isKeyDown(Input.KEY_S)) {
-					xa = 0; 		 // stops the player at that point 
-					if (view == 0)	// if facing left
-						kAnimation = kAnimationDR;
-					else           // if facing right
-						kAnimation = kAnimationDL;
+	    				//moving right
+	    			} else if (in.isKeyDown(Input.KEY_D)) {
+	    				view = 0;            			  // changes the view to left
+	    				if (!jumping)	                  // if not currently in the air it changes the animation
+	    					kAnimation = kAnimationWR;
+	    				if (!stopped)
+	    					xa = (200 / 1000.0f) * delta; // sets the x-velocity
+	    				moving = true;
+					
+	    				// if player is not doing any actions
+	    			} else if (!jumping && !falling && !attacking){
+	    				xa = 0;                         // player is not moving
+	    				if (view == 0)                  // if facing left
+	    					kAnimation = kAnimationIR;  
+	    				else                            // if facing right
+	    					kAnimation = kAnimationIL;
+	    				moving = false;
+	    			}
+	    			x += xa;						 // updates the current position of the player
+	    			logic();                         // external function used to keep the player in bounds
+	    		}
+	    		// Player 2 controls
+	    	} else {
+	    		// if player is not hit he can attack
+	    		if (!hit){
+	    			// FIXME heavy attacks causes a dual proc of knock back animation    	
+	    			//light punch
+	    			if (in.isKeyPressed(Input.KEY_NUMPAD4) && !attacking) {
+	    				attacking = true;
+	    				if (view == 0) // if facing left
+	    					kAnimation = kAnimationLPR;
+	    				else           // if facing right
+	    					kAnimation = kAnimationLPL;
 				
-				//moving left
-				}else if (in.isKeyDown(Input.KEY_A)) {
-					view = 1; 		                     // changes the view of the player to facing right
-					if (!jumping)                       // if not currently in the air it changes the animation
-						kAnimation = kAnimationWL;
-					if (!stopped)                       // if no one is blocking the player 
-						xa = (200 / 1000.0f) * -delta; // sets the x-velocity 
-				
-				//moving right
-				} else if (in.isKeyDown(Input.KEY_D)) {
-					view = 0;            			  // changes the view to left
-					if (!jumping)	                  // if not currently in the air it changes the animation
-						kAnimation = kAnimationWR;
-					if (!stopped)					  // if no one is blocking the player
-						xa = (200 / 1000.0f) * delta; // sets the x-velocity 
-				
-				// if player is not doing any actions
-				} else if (!jumping && !falling && !attacking){
-					xa = 0;                         // player is not moving
-					if (view == 0)                  // if facing left
-						kAnimation = kAnimationIR;  
-					else                            // if moving right
-						kAnimation = kAnimationIL;
-				}
-				x += xa;						 // updates the current position of the player
-				logic();                         // external function used to keep the player in bounds
-			}
-		// Player 2 controls
-		} else {
-			// if player is not hit he can attack
-		    if (!hit){
-		    // TODO resize the box to simulate an actual punch or kick
-			// FIXME heavy attacks causes a dual proc of knock back animation    	
-		    	//light punch
-		    	if (in.isKeyDown(Input.KEY_NUMPAD4)) {
-		    		attacking = true;
-					if (view == 0) // if facing left
-						kAnimation = kAnimationLPR;
-					else           // if facing right
-						kAnimation = kAnimationLPL;
-				
-				//light kick 
-		    	}else if (in.isKeyDown(Input.KEY_NUMPAD1)) {
-		    		attacking = true;
-		    		if (view == 0)	// if facing left
-		    			kAnimation = kAnimationLKR;
-		    		else 			// if facing right
-		    			kAnimation = kAnimationLKL;
+	    				//light kick 
+	    			}else if (in.isKeyPressed(Input.KEY_NUMPAD1) && !attacking) {
+	    				attacking = true;
+	    				if (view == 0)	// if facing left
+	    					kAnimation = kAnimationLKR;
+	    				else 			// if facing right
+	    					kAnimation = kAnimationLKL;
 		    		
-		    	//heavy punch
-		    	}else if (in.isKeyDown(Input.KEY_NUMPAD5)) {
-		    		attacking = true;
-		    		if (view == 0)	// if facing left
-		    			kAnimation = kAnimationSPR;
-		    		else 			// if facing right
-		    			kAnimation = kAnimationSPL;
+	    				//heavy punch
+	    			}else if (in.isKeyPressed(Input.KEY_NUMPAD5) && !attacking) {
+	    				attacking = true;
+	    				if (view == 0)	// if facing left
+	    					kAnimation = kAnimationSPR;
+	    				else 			// if facing right
+	    					kAnimation = kAnimationSPL;
 		    		
-		    	//heavy kick	
-		    	}else if (in.isKeyDown(Input.KEY_NUMPAD2)) {
-		    		attacking = true;
-		    		if (view == 0)	// if facing left
-		    			kAnimation = kAnimationSKR;
-		    		else 			// if facing right
-		    			kAnimation = kAnimationSKL;
-		    	} 
+	    				//heavy kick	
+	    			}else if (in.isKeyPressed(Input.KEY_NUMPAD2) && !attacking) {
+	    				attacking = true;
+	    				if (view == 0)	// if facing left
+	    					kAnimation = kAnimationSKR;
+	    				else 			// if facing right
+	    					kAnimation = kAnimationSKL;
+	    			} 
 		    	
-		    // Getting hit by another player 
-		    } else {
-		    	if (view == 0) // if facing left
-		    		kAnimation = kAnimationHL;
-		    	else    	  // if facing right
-		    		kAnimation = kAnimationHR;
-		    }
+	    			// Getting hit by another player 
+	    		} else if (hit){
+	    			if (view == 0){ // if facing left
+	    				kAnimation = kAnimationHR;
+	    				if (x >= 5)
+	    					xa = -4;
+	    			} else{    	  // if facing right
+	    				kAnimation = kAnimationHL;
+	    				if (x <= 665)
+	    					xa = 4;
+	    			}
+	    			x += xa;
+	    		}
 		    
-		    // If the player is either not hit or not attacking he can move
-			if (!attacking && !hit){
-				//jumping
-				// jump only works if the player is not currently jumping
-				if (in.isKeyDown(Input.KEY_UP) && !jumping && !falling) {
-					ya = 15;        // sets the y-velocity
-					if (view == 0) // if facing left
-						kAnimation = kAnimationJR;
-					else           // if facing right
-						kAnimation = kAnimationJL;
-					jumping = true;
+	    		// If the player is either not hit or not attacking he can move
+	    		if (!attacking && !hit){
+	    			//jumping
+	    			// jump only works if the player is not currently jumping
+	    			if (in.isKeyPressed(Input.KEY_UP) && !jumping && !falling) {
+	    				ya = 15;        // sets the y-velocity
+	    				if (view == 0) // if facing left
+	    					kAnimation = kAnimationJR;
+	    				else           // if facing right
+	    					kAnimation = kAnimationJL;
+	    				jumping = true;
 					
-				//ducking 	
-				}else if (in.isKeyDown(Input.KEY_DOWN)) {
-					xa = 0; 		 // stops the player at that point 
-					if (view == 0)	// if facing left
-						kAnimation = kAnimationDR;
-					else           // if facing right
-						kAnimation = kAnimationDL;
+	    				//ducking 	
+	    			}else if (in.isKeyDown(Input.KEY_DOWN)) {
+	    				xa = 0; 		 // stops the player at that point 
+	    				if (view == 0)	// if facing left
+	    					kAnimation = kAnimationDR;
+	    				else           // if facing right
+	    					kAnimation = kAnimationDL;
+	    				moving = false;
+	    				super.resize(60, 125);
 				
-				//moving left
-				}else if (in.isKeyDown(Input.KEY_LEFT)) {
-					view = 1; 		                     // changes the view of the player to facing right
-					if (!jumping)                       // if not currently in the air it changes the animation
-						kAnimation = kAnimationWL;
-					if (!stopped)                       // if no one is blocking the player 
-						xa = (200 / 1000.0f) * -delta; // sets the x-velocity 
-				
-				//moving right
-				} else if (in.isKeyDown(Input.KEY_RIGHT)) {
-					view = 0;            			  // changes the view to left
-					if (!jumping)	                  // if not currently in the air it changes the animation
-						kAnimation = kAnimationWR;
-					if (!stopped)					  // if no one is blocking the player
-						xa = (200 / 1000.0f) * delta; // sets the x-velocity 
-				
-				// if player is not doing any actions
-				} else if (!jumping && !falling && !attacking){
-					xa = 0;                         // player is not moving
-					if (view == 0)                  // if facing left
-						kAnimation = kAnimationIR;  
-					else                            // if moving right
-						kAnimation = kAnimationIL;
-				}
-				x += xa;						 // updates the current position of the player
-				logic();                         // external function used to keep the player in bounds
-			}
-		}
+	    				//moving left
+	    			}else if (in.isKeyDown(Input.KEY_LEFT)) {
+	    				view = 1; 		                     // changes the view of the player to facing right
+	    				if (!jumping)                       // if not currently in the air it changes the animation
+	    					kAnimation = kAnimationWL;
+	    				if (!stopped)
+	    					xa = (200 / 1000.0f) * -delta; // sets the x-velocity 
+	    				moving = true;
+					
+	    				//moving right
+	    			} else if (in.isKeyDown(Input.KEY_RIGHT)) {
+	    				view = 0;            			  // changes the view to left
+	    				if (!jumping)	                  // if not currently in the air it changes the animation
+	    					kAnimation = kAnimationWR;
+	    				if (!stopped)
+	    					xa = (200 / 1000.0f) * delta; // sets the x-velocity 
+	    				moving = true;
+					
+	    				// if player is not doing any actions
+	    			} else if (!jumping && !falling && !attacking){
+	    				xa = 0;                         // player is not moving
+	    				if (view == 0)                  // if facing left
+	    					kAnimation = kAnimationIR;  
+	    				else                            // if facing right
+	    					kAnimation = kAnimationIL;
+	    				moving = false;
+	    			}
+	    			x += xa;						 // updates the current position of the player
+	    			logic();                         // external function used to keep the player in bounds
+	    		}
+	    	}
+	    }
 	}
 	  // End of update()
 	
@@ -346,8 +381,8 @@ public class Combatant extends Box{
 		
 		if (jumping && !falling)    // if the player is starting to jump
 			y -=  ya;			    // y-position of is updated by the y-velocity	
-		                           
-		if (y == 180 && jumping){   // when the player reaches the peak of his jump 
+		
+		if (y == 135 && jumping){   // when the player reaches the peak of his jump 
 			falling = true;         // falling occurs and the player momentarily stops in air
 		    jumping = false;
 		    ya = 0;				    // falling occurs and the player momentarily stops in air
@@ -375,4 +410,5 @@ public class Combatant extends Box{
 	public void setView(int view){
 		this.view = view;
 	}
+	
 }// End of class
