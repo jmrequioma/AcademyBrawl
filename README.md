@@ -40,7 +40,7 @@ Player 1
 ```
              Jump
               [W]                   [I] - Weak punch  [O] - Strong punch  [P] - Ultimate Ability
-Move Right [A]   [S] Move Left      [K] - Weak kick   [L] - Strong kick
+Move Left [A]   [S] Move Right      [K] - Weak kick   [L] - Strong kick
               [D]
               Crouch
 ```
@@ -50,7 +50,7 @@ Player 2
 ```
              Jump                  *numpad keys
               [↑]                   [4] - Weak punch  [5] - Strong punch  [6] - Ultimate Ability
-Move Right [←]   [→] Move Left      [1] - Weak kick   [2] - Strong kick
+Move Left [←]   [→] Move Right      [1] - Weak kick   [2] - Strong kick
               [↓]
               Crouch
 ```
