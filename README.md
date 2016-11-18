@@ -58,7 +58,7 @@ Move Left [←]   [→] Move Right      [1] - Weak kick   [2] - Strong kick
 ## Built With
 
 * [Eclipse](https://eclipse.org/downloads/) - The IDE framework used
-* [Slick2D](http://slick.ninjacave.com/) - Imporeted Library
+* [Slick2D](http://slick.ninjacave.com/) - Imported Library
 * [Lightweight Java Game Library](https://www.lwjgl.org/) - Imported Library
 * [Photoshop CS6](http://www.photoshop.com/) - Image Editing software use
 * [TexturePackagerGUI](https://www.codeandweb.com/texturepacker) - Sprite Sheet creating software
